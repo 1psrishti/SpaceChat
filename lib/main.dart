@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:space_chat/pages/auth/signin_page.dart';
+import 'package:space_chat/pages/auth/login_page.dart';
 import 'package:space_chat/pages/home_page.dart';
 import 'helper/helper_functions.dart';
 import 'shared/constants.dart';
@@ -51,7 +51,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: _isSignedIn ? const HomePage() : const SignInPage(),
+      theme: ThemeData(
+        primaryColor: Constants().primaryColor,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: _isSignedIn ? const HomePage() : const LoginPage(),
     );
   }
 }
