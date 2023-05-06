@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:space_chat/shared/constants.dart';
 
 InputDecoration textInputDecoration = InputDecoration(
-  labelStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w300),
+  labelStyle: const TextStyle(color: Color(0xff737373), fontWeight: FontWeight.w400),
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Constants().primaryColor, width: 2),
   ),

@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                         text: "Register Here",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                         recognizer: TapGestureRecognizer()..onTap = (){
-                          nextScreen(context, const RegisterPage());
+                          nextScreenReplace(context, const RegisterPage());
                         }
                       ),
                     ]
