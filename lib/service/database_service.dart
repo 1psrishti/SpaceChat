@@ -10,7 +10,7 @@ class DatabaseService {
   final CollectionReference spaceCollection =
       FirebaseFirestore.instance.collection("spaces");
 
-  Future updateUserData(String name, String email) async {
+  Future saveUserData(String name, String email) async {
     return await userCollection.doc(uid).set({
       "name": name,
       "email": email,
@@ -18,5 +18,10 @@ class DatabaseService {
       "profilePic": "",
       "uid": uid,
     });
+  }
+
+  Future getUserData(String email) async {
+    QuerySnapshot snapshot = await userCollection.where("email", isEqualTo: email).get();
+    return snapshot;
   }
 }
