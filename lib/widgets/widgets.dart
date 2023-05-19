@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:space_chat/shared/constants.dart';
 
+
+Widget noSpacesWidget(){
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset("assets/images/empty.png", height: 150,),
+        const Text("Nothing to see here.", style: TextStyle(fontSize: 16)),
+        const Text("Join a space or create a new one!",),
+        const SizedBox(height: 100),
+      ],
+    ),
+  );
+}
+
 InputDecoration textInputDecoration = InputDecoration(
   labelStyle: const TextStyle(color: Color(0xff737373), fontWeight: FontWeight.w400),
   focusedBorder: OutlineInputBorder(
@@ -14,6 +29,7 @@ InputDecoration textInputDecoration = InputDecoration(
   ),
 );
 
+
 void nextScreen(context, page){
   Navigator.push(context, MaterialPageRoute(builder: (context) => page));
 }
@@ -21,6 +37,7 @@ void nextScreen(context, page){
 void nextScreenReplace(context, page){
   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => page));
 }
+
 
 void showSnackBar(context, color, message){
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(

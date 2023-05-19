@@ -6,4 +6,5 @@ class Constants{
   static String messagingSenderId = "1042995685225";
   static String projectId = "spacechat-1ed6f";
   final primaryColor = const Color(0xff9f3ee1);
+  final appbarColor = const Color(0xffda69da);
 }
