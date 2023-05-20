@@ -50,4 +50,18 @@ class DatabaseService {
           FieldValue.arrayUnion(["${spaceDocumentReference.id}_$spaceName"])
     });
   }
+
+  getChats(String spaceId) async {
+    return spaceCollection.doc(spaceId).collection("messages").orderBy("time").snapshots();
+  }
+
+  Future getSpaceAdmin(String spaceId) async {
+    DocumentReference documentReference = spaceCollection.doc(spaceId);
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+    return documentSnapshot['admin'];
+  }
+
+  getSpaceMembers(String spaceId) async {
+    return spaceCollection.doc(spaceId).snapshots();
+  }
 }
