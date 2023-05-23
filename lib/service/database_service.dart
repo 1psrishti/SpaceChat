@@ -64,4 +64,41 @@ class DatabaseService {
   getSpaceMembers(String spaceId) async {
     return spaceCollection.doc(spaceId).snapshots();
   }
+
+  searchByName(String spaceName){
+    return spaceCollection.where('spaceName', isEqualTo: spaceName).get();
+  }
+
+  Future<bool> isUserJoined(String spaceName, String spaceId, String name) async {
+    DocumentReference userDocumentReference = userCollection.doc(uid);
+    DocumentSnapshot documentSnapshot = await userDocumentReference.get();
+    List<dynamic> spaces = await documentSnapshot['spaces'];
+    if (spaces.contains("${spaceId}_$spaceName")) {
+      return true;
+    }
+    return false;
+  }
+
+  Future toggleGroupJoin(String spaceId, String name, String spaceName) async {
+    DocumentReference userDocumentReference = userCollection.doc(uid);
+    DocumentReference spaceDocumentReference = spaceCollection.doc(spaceId);
+    DocumentSnapshot documentSnapshot = await userDocumentReference.get();
+    List<dynamic> spaces = await documentSnapshot['spaces'];
+    if (spaces.contains("${spaceId}_$spaceName")) {
+      await userDocumentReference.update({
+        "spaces": FieldValue.arrayRemove(["${spaceId}_$spaceName"])
+      });
+      await spaceDocumentReference.update({
+        "members": FieldValue.arrayRemove(["${uid}_$name"])
+      });
+    } else {
+      await userDocumentReference.update({
+        "spaces": FieldValue.arrayUnion(["${spaceId}_$spaceName"])
+      });
+      await spaceDocumentReference.update({
+        "members": FieldValue.arrayUnion(["${uid}_$name"])
+      });
+    }
+  }
+
 }

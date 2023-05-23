@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:space_chat/pages/home_page.dart';
 import 'package:space_chat/service/database_service.dart';
 import 'package:space_chat/shared/constants.dart';
+import 'package:space_chat/widgets/widgets.dart';
 
 class SpaceInfoPage extends StatefulWidget {
   final String spaceId;
@@ -72,7 +74,39 @@ class _SpaceInfoPageState extends State<SpaceInfoPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context){
+                  return AlertDialog(
+                    title: const Text("Hold Up!"),
+                    content: const Text("Are you sure you want to leave this space?"),
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.cancel_outlined,
+                            color: Colors.red),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          DatabaseService(uid: FirebaseAuth.instance
+                              .currentUser!.uid).toggleGroupJoin(
+                            widget.spaceId,
+                            getName(widget.admin),
+                            widget.spaceName,
+                          ).whenComplete((){
+                            nextScreenReplace(context, const HomePage());
+                          });
+                        },
+                        icon: const Icon(Icons.logout, color: Colors.green),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
             icon: const Icon(Icons.exit_to_app_rounded),
           ),
         ],
